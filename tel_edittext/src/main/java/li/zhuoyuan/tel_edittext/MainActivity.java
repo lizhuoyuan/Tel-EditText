@@ -1,13 +1,17 @@
 package li.zhuoyuan.tel_edittext;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private EditText et;
+    private boolean ismobile;
+    private String tel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,19 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (s.length() == 13) {
+                    tel = s.toString().replace(" ", "");
+                    ismobile = isMobileNO(tel);
+                    Log.e("电话号判断", ismobile + "");
+                }
             }
         });
+    }
+
+    public static boolean isMobileNO(String mobiles) {
+        //"[1]"代表第1位为数字1，"[358]"代表第二位可以为3、5、8中的一个，"\\d{9}"代表后面是可以是0～9的数字，有9位。
+        String telRegex = "[1][34578]\\d{9}";
+        if (TextUtils.isEmpty(mobiles)) return false;
+        else return mobiles.matches(telRegex);
     }
 }
