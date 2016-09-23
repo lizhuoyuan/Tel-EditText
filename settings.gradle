@@ -1,1 +1,1 @@
-include ':app', ':tel_edittext'
+include ':tel_edittext'
